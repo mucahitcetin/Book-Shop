@@ -37,7 +37,7 @@ const createBookItemsHtml = () => {
     bookListHtml += `
       <div class="col-5 ${index % 2 == 0 && "offset-2"} my-5">
       <div class="row book__card">
-        <div class="col-6">
+        <div class="col-6 ">
           <img
             src="${book.imgSource}"
             alt=""
@@ -165,7 +165,7 @@ const addBookToBasket = (bookId) => {
   let findedBook = bookList.find((book) => book.id == bookId);
   if (findedBook) {
     // sepetteki ürünün zaten var olup olmadığını kontrol ettik
-    const basketAlreadyIndex = basketList.findIndex((basket) => basket.product.id == book.id);
+    const basketAlreadyIndex = basketList.findIndex((basket) => basket.product.id == bookId);
     // eğer sepet boşsa veya eklenen kitap sepette yoksa
     if (basketAlreadyIndex == -1) {
       let addItem = { quantity: 1, product: findedBook };

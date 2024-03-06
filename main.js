@@ -13,7 +13,7 @@ const getBooks = () => {
     .then((books) => (bookList = books))
     .catch((err) => console.log(err));
 };
-getBooks()
+getBooks();
 
 // dinamik yıldızlar oluşturduk
 const createBookStars = (starRate) => {
@@ -30,7 +30,7 @@ const createBookStars = (starRate) => {
 
 //html ekleme - ürünler
 const createBookItemsHtml = () => {
-  const bookListEl = document.getElementById('book__list');
+  const bookListEl = document.querySelector('.book__list');
   let bookListHtml = '';
 
   bookList.forEach((book, index) => {
@@ -106,12 +106,12 @@ const createBookTypesHtml = () => {
   filterEle.innerHTML = filterHtml;
 };
 const filterBooks = (filterEle) => {
-  document.querySelector(".filter.active").classList.remove("active");
+  document.querySelector(".filter .active").classList.remove("active");
   filterEle.classList.add("active");
-  let bookType = filterEle.daraset.types;
+  let bookType = filterEle.dataset.types;
   getBooks();
   if (bookType != "ALL") {
-    bookList = bookList.filter((book) => book.type === bookType);
+    bookList = bookList.filter((book) => book.type == bookType);
   }
   createBookItemsHtml();
 };
@@ -119,18 +119,18 @@ const filterBooks = (filterEle) => {
 const listBasketItems = () => {
   const basketListEl = document.querySelector(".basket__list");
   const basketCountEl = document.querySelector(".basket__count");
-  console.log(basketList);
+  // console.log(basketList);
   const totalQuantity = basketList.reduce(
     (total, item) => total + item.quantity,
     0
   );
   basketCountEl.innerHTML = totalQuantity > 0 ? totalQuantity : null;
   const totalPriceEl = document.querySelector(".total__price");
-  console.log(totalPriceEl);
+  // console.log(totalPriceEl);
   let basketListHtml = "";
   let totalPrice = 0;
   basketList.forEach((item) => {
-    console.log(item);
+    // console.log(item);
     totalPrice += item.product.price * item.quantity;
     basketListHtml += `
     <li class="basket__item">
@@ -162,20 +162,20 @@ const listBasketItems = () => {
 
 // sepete ürün ekleme
 const addBookToBasket = (bookId) => {
-  let findedBook = bookList.find((book) => book.id === bookId);
+  let findedBook = bookList.find((book) => book.id == bookId);
   if (findedBook) {
     // sepetteki ürünün zaten var olup olmadığını kontrol ettik
     const basketAlreadyIndex = basketList.findIndex((basket) => basket.product.id == book.id);
     // eğer sepet boşsa veya eklenen kitap sepette yoksa
     if (basketAlreadyIndex == -1) {
-      let.addItem = { quantity: 1, product: findedBook };
+      let addItem = { quantity: 1, product: findedBook };
       basketList.push(addItem);
     } else {
       // sepette zaten var olan bir kitap ekleniyorsa, miktarını arttır
       basketList[basketAlreadyIndex].quantity += 1;
     }
   }
-  constbtnCheck = document.querySelector(".btnCheck");
+  const btnCheck = document.querySelector(".btnCheck");
   btnCheck.style.display = 'block';
   // sepet içeriğini güncelle ve görüntüle
   listBasketItems();
